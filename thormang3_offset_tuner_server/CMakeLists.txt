@@ -1,0 +1,54 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(thormang3_offset_tuner_server)
+
+## Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  roslib
+  std_msgs
+  cmake_modules
+  dynamixel_sdk
+  robotis_device
+  robotis_framework_common
+  thormang3_base_module
+  robotis_controller_msgs
+  robotis_controller
+)
+
+find_package(Eigen REQUIRED)
+
+###################################
+## catkin specific configuration ##
+###################################
+catkin_package(
+  INCLUDE_DIRS include
+#  CATKIN_DEPENDS roscpp
+#  DEPENDS system_lib
+)
+
+###########
+## Build ##
+###########
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+  ${Eigen_INCLUDE_DIRS}
+)
+
+## Declare a C++ executable
+add_executable(offset_tuner_server_node 
+   src/Thormang3OffsetTunerServer.cpp
+   src/main.cpp
+)
+
+## Specify libraries to link a library or executable target against
+target_link_libraries(offset_tuner_server_node
+  thormang3_base_module
+  robotis_controller
+  yaml-cpp
+  ${catkin_LIBRARIES}
+)
+
+
