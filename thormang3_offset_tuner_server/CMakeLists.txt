@@ -12,7 +12,9 @@ find_package(catkin REQUIRED COMPONENTS
   dynamixel_sdk
   robotis_device
   robotis_framework_common
+  robotis_math
   thormang3_base_module
+  thormang3_kinematics_dynamics
   robotis_controller_msgs
   robotis_controller
 )
@@ -45,8 +47,6 @@ add_executable(offset_tuner_server_node
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(offset_tuner_server_node
-  thormang3_base_module
-  robotis_controller
   yaml-cpp
   ${catkin_LIBRARIES}
 )

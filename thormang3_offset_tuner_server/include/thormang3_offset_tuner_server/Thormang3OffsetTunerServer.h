@@ -1,5 +1,5 @@
-#ifndef OFFSET_TUNER_SERVER_H_
-#define OFFSET_TUNER_SERVER_H_
+#ifndef THORMANG3_OFFSET_TUNER_SERVER_H_
+#define THORMANG3_OFFSET_TUNER_SERVER_H_
 
 #include <ros/ros.h>
 #include <map>
@@ -65,7 +65,7 @@ private:
 
     ros::Subscriber		send_tra_sub_;
     ros::Subscriber		joint_offset_data_sub_;
-    ros::Subscriber		joint_torque_enable_;
+    ros::Subscriber		joint_torque_enable_sub_;
     ros::Subscriber		command_sub_;
     ros::ServiceServer	offset_data_server_;
 
@@ -85,8 +85,6 @@ public:
 
 };
 
-
-
 }
 
-#endif
+#endif /* THORMANG3_OFFSET_TUNER_SERVER_H_ */
