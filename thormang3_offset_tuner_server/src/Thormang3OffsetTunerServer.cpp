@@ -56,7 +56,7 @@ bool OffsetTunerServer::Initialize()
     ros::NodeHandle _nh;
 
     //Get File Path
-    _nh.param<std::string>("offset_path", offset_file_, "");
+    _nh.param<std::string>("offset_file_path", offset_file_, "");
     _nh.param<std::string>("robot_file_path", robot_file_, "");
 	_nh.param<std::string>("init_file_path", init_file_, "");
 
