@@ -12,7 +12,9 @@ find_package(catkin REQUIRED COMPONENTS
   dynamixel_sdk
   robotis_device
   robotis_framework_common
+  robotis_math
   thormang3_base_module
+  thormang3_kinematics_dynamics
   robotis_controller_msgs
   robotis_controller
 )
