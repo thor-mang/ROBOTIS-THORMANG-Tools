@@ -45,8 +45,6 @@ add_executable(offset_tuner_server_node
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(offset_tuner_server_node
-  thormang3_base_module
-  robotis_controller
   yaml-cpp
   ${catkin_LIBRARIES}
 )
