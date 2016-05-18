@@ -40,13 +40,13 @@ include_directories(
 )
 
 ## Declare a C++ executable
-add_executable(offset_tuner_server_node 
+add_executable(thormang3_offset_tuner_server_node 
    src/Thormang3OffsetTunerServer.cpp
    src/main.cpp
 )
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(offset_tuner_server_node
+target_link_libraries(thormang3_offset_tuner_server_node
   yaml-cpp
   ${catkin_LIBRARIES}
 )
