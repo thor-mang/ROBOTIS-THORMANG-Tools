@@ -36,7 +36,7 @@ void OffsetTunerServer::setCtrlModule(std::string module)
 
 	std::map<std::string, DynamixelState *>::iterator _joint_iter;
     ros::NodeHandle _nh;
-    ros::Publisher set_ctrl_module_pub_	= _nh.advertise<robotis_controller_msgs::JointCtrlModule>("/robotis/set_ctrl_module", 1);
+    ros::Publisher set_ctrl_module_pub_	= _nh.advertise<robotis_controller_msgs::JointCtrlModule>("robotis/set_ctrl_module", 1);
 
 	BaseModule* _base_module = BaseModule::GetInstance();
 
@@ -183,10 +183,10 @@ bool OffsetTunerServer::Initialize()
     }
 
 
-    send_tra_sub_         	 = _nh.subscribe("/robotis/base/send_tra",                  10, &OffsetTunerServer::StringMsgsCallBack,       this);
-    joint_offset_data_sub_	 = _nh.subscribe("/robotis/offset_tuner/joint_offset_data", 10, &OffsetTunerServer::JointOffsetDataCallback,  this);
-    joint_torque_enable_sub_ = _nh.subscribe("/robotis/offset_tuner/torque_enable",     10, &OffsetTunerServer::JointTorqueOnOffCallback, this);
-    command_sub_			 = _nh.subscribe("/robotis/offset_tuner/command",            5, &OffsetTunerServer::CommandCallback,          this);
+    send_tra_sub_         	 = _nh.subscribe("robotis/base/send_tra",                  10, &OffsetTunerServer::StringMsgsCallBack,       this);
+    joint_offset_data_sub_	 = _nh.subscribe("robotis/offset_tuner/joint_offset_data", 10, &OffsetTunerServer::JointOffsetDataCallback,  this);
+    joint_torque_enable_sub_ = _nh.subscribe("robotis/offset_tuner/torque_enable",     10, &OffsetTunerServer::JointTorqueOnOffCallback, this);
+    command_sub_			 = _nh.subscribe("robotis/offset_tuner/command",            5, &OffsetTunerServer::CommandCallback,          this);
     offset_data_server_		 = _nh.advertiseService("robotis/offset_tuner/get_present_joint_offset_data",&OffsetTunerServer::GetPresentJointOffsetDataServiceCallback, this);
 
 
