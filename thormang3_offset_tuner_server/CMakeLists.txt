@@ -41,7 +41,7 @@ include_directories(
 
 ## Declare a C++ executable
 add_executable(thormang3_offset_tuner_server_node 
-   src/Thormang3OffsetTunerServer.cpp
+   src/thormang3_offset_tuner_server.cpp
    src/main.cpp
 )
 
