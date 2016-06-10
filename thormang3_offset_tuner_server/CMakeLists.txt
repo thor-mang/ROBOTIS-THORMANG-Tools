@@ -8,12 +8,13 @@ find_package(catkin REQUIRED COMPONENTS
   cmake_modules
   dynamixel_sdk
   robotis_device
-  robotis_framework_common
   robotis_math
-  thormang3_base_module
-  thormang3_kinematics_dynamics
-  robotis_controller_msgs
+  robotis_framework_common
   robotis_controller
+  robotis_controller_msgs
+  thormang3_kinematics_dynamics
+  thormang3_base_module
+  thormang3_offset_tuner_msgs
 )
 
 find_package(Eigen REQUIRED)
