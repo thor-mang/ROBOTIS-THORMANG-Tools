@@ -29,10 +29,10 @@
  *******************************************************************************/
 
 /*
- * Thormang3OffsetTunerServer.cpp
+ * thormang3_offset_tuner_server.cpp
  *
  *  Created on: 2016. 2. 15.
- *      Author: HJSONG
+ *      Author: Jay Song
  */
 
 #include "thormang3_offset_tuner_server/thormang3_offset_tuner_server.h"
@@ -97,7 +97,7 @@ bool OffsetTunerServer::initialize()
     return -1;
   }
   //controller_->LoadOffset(offset_file_);
-  controller_->addMotionModule((MotionModule*) BaseModule::getInstance());
+  controller_->addMotionModule((robotis_framework::MotionModule*)BaseModule::getInstance());
 
   //Initialize RobotOffsetData
   for (std::map<std::string, robotis_framework::Dynamixel *>::iterator robot_it = controller_->robot_->dxls_.begin();
@@ -261,7 +261,7 @@ void OffsetTunerServer::moveToInitPose()
   }
 
   usleep(80 * 1000);
-  base_module->PoseGenProc(offset_init_pose);
+  base_module->poseGenerateProc(offset_init_pose);
   usleep(10 * 000);
 
   while (base_module->isRunning())
@@ -381,82 +381,6 @@ void OffsetTunerServer::jointOffsetDataCallback(const thormang3_offset_tuner_msg
   robot_offset_data_[msg->joint_name]->i_gain_ = msg->i_gain;
   robot_offset_data_[msg->joint_name]->d_gain_ = msg->d_gain;
 
-//	uint16_t goal_pose_addr = controller_->robot->dxls[msg->joint_name]->goal_position_address;
-//	uint8_t _error = 0;
-//	int comm_result = COMM_SUCCESS;
-//	//length ??
-//	int id = controller_->robot->dxls[msg->joint_name]->id;
-//	ROS_INFO_STREAM("ID : " << id <<" " << goal_pose_value << " " << (uint32_t)goal_pose_value);
-//	comm_result = controller_->Write4Byte(msg->joint_name, goal_pose_addr, goal_pose_value, &_error);
-//
-//	if(comm_result != COMM_SUCCESS)	{
-//		ROS_ERROR("Failed to write goal position");
-//		return;
-//	}
-//	else {
-//		RobotOffsetData[msg->joint_name]->joint_init_pos_rad = msg->goal_value;
-//		RobotOffsetData[msg->joint_name]->joint_offset_rad   = msg->offset_value;
-//	}
-//
-//	if(_error != 0 )	{
-//		fprintf(stderr, "%c %d\n", _error, _error);
-//		ROS_ERROR_STREAM("goal_pos_set : " << msg->joint_name << "  has error "<< (int)_error);
-//	}
-//
-//	uint16_t pgain_addr = controller_->robot->dxls[msg->joint_name]->position_p_gain_address;
-//	comm_result = controller_->Write2Byte(msg->joint_name, pgain_addr, msg->p_gain, &_error);
-//	if(comm_result != COMM_SUCCESS)	{
-//		ROS_ERROR("Failed to write p gain");
-//		return;
-//	}
-//	else
-//		RobotOffsetData[msg->joint_name]->p_gain = msg->p_gain;
-//
-//	if(_error != 0 )	{
-//		ROS_ERROR_STREAM("pgain_set : " << msg->joint_name << "  has error "<< (int)_error);
-//	}
-//
-//	uint16_t igain_addr = controller_->robot->dxls[msg->joint_name]->position_i_gain_address;
-//	if(igain_addr != 0 ) {
-//		uint8_t length = controller_->robot->dxls[msg->joint_name]->ctrl_table["position_I_gain"]->data_length;
-//		if(length == 1)
-//			comm_result = controller_->Write1Byte(msg->joint_name, igain_addr, (uint8_t)(msg->i_gain), &_error);
-//		else if(length == 2)
-//			comm_result = controller_->Write2Byte(msg->joint_name, igain_addr, (uint16_t)(msg->i_gain), &_error);
-//		else if(length == 4)
-//			comm_result = controller_->Write4Byte(msg->joint_name, igain_addr, (uint32_t)(msg->i_gain), &_error);
-//		else {
-//			return;
-//		}
-//
-//		if(comm_result != COMM_SUCCESS)	{
-//			ROS_ERROR("Failed to write i gain");
-//			return;
-//		}
-//		else
-//			RobotOffsetData[msg->joint_name]->i_gain = msg->i_gain;
-//
-//		if(_error != 0 )	{
-//			ROS_ERROR_STREAM("igain_set : " << msg->joint_name << "  has error "<< (int)_error);
-//		}
-//	}
-//
-//
-//
-//	uint16_t dgain_addr = controller_->robot->dxls[msg->joint_name]->position_d_gain_address;
-//	if(dgain_addr != 0 ) {
-//		comm_result = controller_->Write2Byte(msg->joint_name, dgain_addr, msg->d_gain, &_error);
-//		if(comm_result != COMM_SUCCESS)	{
-//			ROS_ERROR("Failed to write d gain");
-//			return;
-//		}
-//		else
-//			RobotOffsetData[msg->joint_name]->d_gain = msg->d_gain;
-//
-//		if(_error != 0 )	{
-//			ROS_ERROR_STREAM("dgain_set : " << msg->joint_name << "  has error "<< (int)_error);
-//		}
-//	}
 }
 
 void OffsetTunerServer::jointTorqueOnOffCallback(
@@ -503,69 +427,6 @@ void OffsetTunerServer::jointTorqueOnOffCallback(
       }
     }
   }
-
-//	for(unsigned int _i = 0;  _i < msg->torque_enable_data.size(); _i++)
-//	{
-//		std::string _joint_name = msg->torque_enable_data[_i].joint_name;
-//
-//		std::map<std::string, JointOffsetData*>::iterator _it;
-//		for(_it = RobotOffsetData.begin(); _it != RobotOffsetData.end(); _it++)
-//		{
-//			if(_it->first == _joint_name)
-//				break;
-//		}
-//
-//		if(_it == RobotOffsetData.end())
-//		{
-//			ROS_ERROR_STREAM("Invalid Joint Name : " << _joint_name);
-//			return;
-//		}
-
-//		uint16_t _torque_enable_addr = controller_->robot->dxls[msg->torque_enable_data[_i].joint_name]->torque_enable_address;
-//		uint8_t  _torque_enable = 0;
-//		if(msg->torque_enable_data[_i].torque_enable == true)
-//			_torque_enable = 1;
-//
-//		uint8_t _error = 0;
-//		int comm_result = controller_->Write1Byte(msg->torque_enable_data[_i].joint_name, _torque_enable_addr, _torque_enable, &_error);
-//		if((comm_result != COMM_SUCCESS))
-//		{
-//			ROS_ERROR("Failed to write torque enable [result : %d]", comm_result);
-//			return;
-//		}
-//
-//		if(_error != 0 )	{
-//			ROS_ERROR_STREAM( msg->torque_enable_data[_i].joint_name << "  has error "<< (int)_error);
-//		}
-//
-//		if(RobotTorqueEnableData[msg->torque_enable_data[_i].joint_name] == false)
-//		{
-//			uint32_t present_pos_value = 0;
-//			uint8_t  error = 0;
-//			int 	 comm_result = COMM_SUCCESS;
-//			int comm_count = 0;
-//			int max_comm_count = 3;
-//			for(comm_count = 0; comm_count < max_comm_count; comm_count++) {
-//				comm_result = controller_->Read4Byte(_joint_name, controller_->robot->dxls[_joint_name]->present_position_address, &present_pos_value, &error);
-//				if(comm_result != COMM_SUCCESS)
-//				{
-//					ROS_ERROR("Failed to read present pos");
-//					return;
-//				}
-//				else {
-//					RobotOffsetData[msg->torque_enable_data[_i].joint_name]->joint_offset_rad = controller_->robot->dxls[_joint_name]->ConvertValue2Radian(present_pos_value);
-//					break;
-//				}
-//			}
-//
-//			if(comm_count == max_comm_count)
-//			{
-//				ROS_ERROR("All Comm Fail");
-//			}
-//		}
-//
-//		RobotTorqueEnableData[msg->torque_enable_data[_i].joint_name] = msg->torque_enable_data[_i].torque_enable;
-//	}
 }
 
 bool OffsetTunerServer::getPresentJointOffsetDataServiceCallback(

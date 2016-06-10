@@ -29,10 +29,10 @@
  *******************************************************************************/
 
 /*
- * Thormang3OffsetTunerServer.cpp
+ * thormang3_offset_tuner_server.cpp
  *
  *  Created on: 2016. 2. 15.
- *      Author: HJSONG
+ *      Author: Jay Song
  */
 
 #ifndef THORMANG3_OFFSET_TUNER_SERVER_H_
@@ -44,7 +44,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "robotis_controller/robotis_controller.h"
-#include "thormang3_base_module/BaseModule.h"
+#include "thormang3_base_module/base_module.h"
 #include "thormang3_offset_tuner_msgs/JointOffsetData.h"
 #include "thormang3_offset_tuner_msgs/JointTorqueOnOffArray.h"
 #include "thormang3_offset_tuner_msgs/GetPresentJointOffsetData.h"
