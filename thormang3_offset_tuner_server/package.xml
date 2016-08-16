@@ -2,7 +2,11 @@
 <package>
   <name>thormang3_offset_tuner_server</name>
   <version>0.0.0</version>
-  <description>The offset_tuner_server package</description>
+  <description>
+    The offset_tuner_server package
+    The joint offset can be tuned by this package.
+    It is used with the thormang3_offset_tuner_client.
+  </description>
 
   <maintainer email="hjsong@robotis.com">ROBOTIS</maintainer>
 
