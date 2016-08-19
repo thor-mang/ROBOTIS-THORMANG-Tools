@@ -17,6 +17,7 @@
   <build_depend>robotis_controller</build_depend>  
   <build_depend>thormang3_base_module</build_depend>  
   <build_depend>thormang3_offset_tuner_msgs</build_depend>
+  <build_depend>robotis_controller</build_depend>
 
   <run_depend>roscpp</run_depend>
   <run_depend>std_msgs</run_depend>  
