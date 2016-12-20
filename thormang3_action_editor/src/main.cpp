@@ -64,7 +64,6 @@ int main(int argc, char **argv)
   int ch;
 
   thormang3::ActionEditor editor;
-
   if (editor.initializeActionEditor(robot_file, dxl_init_file, offset_file) == false)
   {
     ROS_ERROR("Failed to Initialize");

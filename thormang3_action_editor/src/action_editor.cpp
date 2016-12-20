@@ -72,11 +72,11 @@ ActionEditor::ActionEditor()
   next_row_       = 7;
   exit_row_       = 8;
 
-
+  first_joint_row_ = 0;
   begin_command_mode_ = false;
   edited_ = false;
   page_idx_ = 1;
-  curr_col_  = stp7_col_;
+  curr_col_ = stp7_col_;
   curr_row_ = first_joint_row_;
 
   old_col_ = curr_col_;
@@ -174,13 +174,15 @@ void ActionEditor::moveUpCursor()
 {
   if (curr_col_ >= stp7_col_ && curr_col_ <= ccwslope_col_)
   {
-    // If last_joint_row_ is less than 9 and the difference from pause_row_ is not 1,
-    // it must be specified separately if it is pause_row_.
-    if(curr_row_ == pause_row_)
-      goToCursor(curr_col_, last_joint_row_);
-    else
-      goToCursor(curr_col_, curr_row_ - 1);
-
+    if(curr_row_ > first_joint_row_)
+    {
+      // If last_joint_row_ is less than 9 and the difference from pause_row_ is not 1,
+      // it must be specified separately if it is pause_row_.
+      if(curr_row_ == pause_row_)
+        goToCursor(curr_col_, last_joint_row_);
+      else
+        goToCursor(curr_col_, curr_row_ - 1);
+    }
   }
   else
   {
@@ -193,12 +195,15 @@ void ActionEditor::moveDownCursor()
 {
   if (curr_col_ >= stp7_col_ && curr_col_ <= stp6_col_)
   {
-    // If last_joint_row_ is less than 9 and the difference from pause_row_ is not 1,
-    // it must be specified separately if it is last_joint_row_.
-    if(curr_row_ == last_joint_row_)
-      goToCursor(curr_col_, pause_row_);
-    else
-      goToCursor(curr_col_, curr_row_ + 1);
+    if(curr_row_ < time_row_)
+    {
+      // If last_joint_row_ is less than 9 and the difference from pause_row_ is not 1,
+      // it must be specified separately if it is last_joint_row_.
+      if(curr_row_ == last_joint_row_)
+        goToCursor(curr_col_, pause_row_);
+      else
+        goToCursor(curr_col_, curr_row_ + 1);
+    }
   }
   else if (curr_col_ <= ccwslope_col_)
   {
@@ -279,13 +284,13 @@ bool ActionEditor::initializeActionEditor(std::string robot_file_path, std::stri
   }
   ctrl_->loadOffset(offset_file_path);
   ctrl_->addMotionModule((robotis_framework::MotionModule*)ActionModule::getInstance());
+  ActionModule::getInstance()->enableAllJoints();
 
   robot_ = ctrl_->robot_;
 
   //Initialize Publisher
   ros::NodeHandle nh;
   enable_ctrl_module_pub_ = nh.advertise<std_msgs::String>("/robotis/enable_ctrl_module", 0);
-
 
   //Initialize Member variable
   for(std::map<std::string, robotis_framework::Dynamixel*>::iterator it = robot_->dxls_.begin(); it != robot_->dxls_.end(); it++)
@@ -328,8 +333,6 @@ bool ActionEditor::initializeActionEditor(std::string robot_file_path, std::stri
   screen_col_ = 80;
   screen_row_ = cmd_row_ + 1;
 
-
-
   /**
    * below code must be changed
    */
@@ -340,7 +343,6 @@ bool ActionEditor::initializeActionEditor(std::string robot_file_path, std::stri
         it->second, dynamixel::PacketHandler::getPacketHandler(2.0), 596,  // "profile_velocity"
         8);
   }
-
 
   return true;
 }
@@ -354,7 +356,7 @@ int ActionEditor::convert4095ToPositionValue(int id, int w4095)
 int ActionEditor::convertPositionValueTo4095(int id, int PositionValue)
 {
   double rad = robot_->dxls_[joint_id_to_name_[id]]->convertValue2Radian(PositionValue);
-  return (int)((rad + M_PI)/2048.0);
+  return (int)((rad + M_PI)*2048.0/M_PI);
 }
 
 // Disp & Drawing
@@ -402,7 +404,7 @@ void ActionEditor::drawPage()
   system("clear");
   // 80   0         1         2         3         4         5         6         7
   // 80   01234567890123456789012345678901234567890123456789012345678901234567890123456789     //24
-  printf("                                                                                \n");
+  printf("                                                                                 \n");
   printf("                                                                 Page Number:    \n");  //1
   printf("                                                                  Address:       \n");  //2
   printf("                                                                   Play Count:   \n");  //3
@@ -411,7 +413,7 @@ void ActionEditor::drawPage()
   printf("                                                                   Accel Time:   \n");  //6
   printf("                                                                 Link to Next:   \n");  //7
   printf("                                                                 Link to Exit:   \n");  //8
-  printf("                                                                                \n");  //9
+  printf("                                                                                 \n");  //9
 
   // Draw joint list
   goToCursor(0, 0);
@@ -437,7 +439,8 @@ void ActionEditor::drawPage()
     }
     printf(")");
 
-    printf("[    ]                                                       ");
+    //printf("[    ]                                                       ");
+    printf("[    ]");
     goToCursor(cwslope_col_, curr_row_);
     printf("%.1d%.1d", page_.header.pgain[id] >> 4, page_.header.pgain[id] & 0x0f);
 
@@ -449,9 +452,9 @@ void ActionEditor::drawPage()
   printf("   PauseTime        [    ]                                                       \n");
 
   if (page_.header.schedule == action_file_define::SPEED_BASE_SCHEDULE)
-    printf("   Speed           [    ]                                                       \n");
+    printf("   Speed            [    ]                                                       \n");
   else if (page_.header.schedule == action_file_define::TIME_BASE_SCHEDULE)
-    printf("   Time(x 8msec)   [    ]                                                       \n");
+    printf("   Time(x 8msec)    [    ]                                                       \n");
 
   printf("                     STP7  STP0 STP1 STP2 STP3 STP4 STP5 STP6                    \n");
   printf("]                                                                              ");
@@ -1164,11 +1167,13 @@ void ActionEditor::playCmd()
 
   printCmd("Playing... ('s' to stop, 'b' to brake)");
 
+  ctrl_->startTimer();
+  ros::Duration(0.03).sleep(); // waiting for timer start
+
   std_msgs::String msg;
   msg.data = "action_module";
   enable_ctrl_module_pub_.publish(msg);
-
-  ctrl_->startTimer();
+  ros::Duration(0.03).sleep(); // waiting for enable
 
   if (ActionModule::getInstance()->start(page_idx_, &page_) == false)
   {
