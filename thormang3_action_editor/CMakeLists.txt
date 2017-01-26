@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   robotis_controller
   robotis_framework_common
+  robotis_controller_msgs
   thormang3_action_module
 )
 
