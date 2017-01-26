@@ -34,6 +34,8 @@ add_executable(thormang3_offset_tuner_server_node
    src/main.cpp
 )
 
+add_dependencies(thormang3_offset_tuner_server_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(thormang3_offset_tuner_server_node
   yaml-cpp
   ${catkin_LIBRARIES}
