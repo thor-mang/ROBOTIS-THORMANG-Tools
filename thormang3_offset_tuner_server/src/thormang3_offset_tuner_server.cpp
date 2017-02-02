@@ -60,7 +60,7 @@ void OffsetTunerServer::setCtrlModule(std::string module)
 
   std::map<std::string, robotis_framework::DynamixelState *>::iterator joint_iter;
   ros::NodeHandle nh;
-  ros::Publisher set_ctrl_module_pub = nh.advertise<robotis_controller_msgs::JointCtrlModule>("/robotis/set_ctrl_module", 1);
+  ros::Publisher set_ctrl_module_pub = nh.advertise<robotis_controller_msgs::JointCtrlModule>("robotis/set_ctrl_module", 1);
 
   BaseModule* base_module = BaseModule::getInstance();
 
