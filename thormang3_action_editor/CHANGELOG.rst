@@ -1,6 +1,6 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package thormang3_tools
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package thormang3_action_editor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 0.1.1 (2017-04-25)
 -----------
@@ -10,5 +10,5 @@ Changelog for package thormang3_tools
 * Contributors: Jay Song, Zerom
 
 0.1.0 (2016-08-17)
------------
-* first public release for Kinetic
+------------------
+* none
