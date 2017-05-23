@@ -1,6 +1,12 @@
+################################################################################
+# CMake
+################################################################################
 cmake_minimum_required(VERSION 2.8.3)
 project(thormang3_offset_tuner_server)
 
+################################################################################
+# Packages
+################################################################################
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   roslib
@@ -19,10 +25,24 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Eigen REQUIRED)
 
+################################################################################
+# Declare ROS messages, services and actions
+################################################################################
+
+################################################################################
+# Declare ROS dynamic reconfigure parameters
+################################################################################
+
+################################################################################
+# Catkin specific configuration
+################################################################################
 catkin_package(
   INCLUDE_DIRS include
 )
 
+################################################################################
+# Build
+################################################################################
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
@@ -40,3 +60,24 @@ target_link_libraries(thormang3_offset_tuner_server_node
   yaml-cpp
   ${catkin_LIBRARIES}
 )
+
+################################################################################
+# Install
+################################################################################
+install(TARGETS thormang3_offset_tuner_server_node
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)
+
+install(DIRECTORY launch/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)
+
+################################################################################
+# Test
+################################################################################
