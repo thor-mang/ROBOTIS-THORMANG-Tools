@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <package>
   <name>thormang3_action_editor</name>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
   <description>
     The thormang3_action_editor package
     This package is a action editor for thormang3.
     The action file which is edited by this editor will be used with this action editor.
   </description>
   <license>BSD</license>
+  <author email="sch@robotis.com">SCH</author>
   <author email="kmjung@robotis.com">Kayman</author>
   <author email="hjsong@robotis.com">Jay Song</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>

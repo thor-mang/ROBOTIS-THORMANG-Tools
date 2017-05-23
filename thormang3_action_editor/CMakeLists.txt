@@ -40,7 +40,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(thormang3_action_editor 
+add_executable(thormang3_action_editor
   src/action_editor.cpp
   src/main.cpp
 )
@@ -62,6 +62,10 @@ install(TARGETS thormang3_action_editor
 )
 
 install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)
+
+install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
 
