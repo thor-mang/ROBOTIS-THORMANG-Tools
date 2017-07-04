@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   robotis_controller
   robotis_framework_common
   robotis_controller_msgs
+  thormang3_action_module_msgs
   thormang3_action_module
 )
 
@@ -29,7 +30,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES thormang3_walking_module
-  CATKIN_DEPENDS roscpp robotis_framework_common thormang3_action_module
+  CATKIN_DEPENDS roscpp robotis_framework_common thormang3_action_module_msgs thormang3_action_module
 )
 
 ################################################################################
