@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <package>
   <name>thormang3_offset_tuner_server</name>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
   <description>The offset_tuner_server package</description>
   <license>BSD</license>
+  <author email="sch@robotis.com">SCH</author>
   <author email="kmjung@robotis.com">Kayman</author>
   <author email="hjsong@robotis.com">Jay Song</author>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
