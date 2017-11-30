@@ -1539,7 +1539,7 @@ void ActionEditor::goCmd(int index)
       distance = goal_position - start_position;
 
 //    wDistance = 200;
-    distance = distance * 0.05;
+    distance = distance * 0.03;
 
     if (max_distance < distance)
       max_distance = distance;
@@ -1589,7 +1589,7 @@ void ActionEditor::goCmd(int index)
 
     distance = 0;
 
-    goal_position = page_.step[index].position[id];
+    goal_position = convert4095ToPositionValue(id, page_.step[index].position[id]);
 
     int offset = robot_->dxls_[joint_name]->convertRadian2Value(robot_->dxls_[joint_name]->dxl_state_->position_offset_)
         - robot_->dxls_[joint_name]->value_of_0_radian_position_;
