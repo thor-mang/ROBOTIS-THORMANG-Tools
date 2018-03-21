@@ -17,6 +17,24 @@ find_package(catkin REQUIRED COMPONENTS
   thormang3_action_module
 )
 
+# Resolve system dependency on yaml-cpp, which apparently does not
+# provide a CMake find_package() module.
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(YAML_CPP REQUIRED yaml-cpp)
+find_path(YAML_CPP_INCLUDE_DIR
+  NAMES yaml_cpp.h
+  PATHS ${YAML_CPP_INCLUDE_DIRS}
+)
+find_library(YAML_CPP_LIBRARY
+  NAMES YAML_CPP
+  PATHS ${YAML_CPP_LIBRARY_DIRS}
+)
+link_directories(${YAML_CPP_LIBRARY_DIRS})
+
+if(NOT ${YAML_CPP_VERSION} VERSION_LESS "0.5")
+add_definitions(-DHAVE_NEW_YAMLCPP)
+endif(NOT ${YAML_CPP_VERSION} VERSION_LESS "0.5")
+
 ################################################################################
 # Declare ROS messages, services and actions
 ################################################################################
@@ -40,6 +58,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${YAML_CPP_INCLUDE_DIRS}
 )
 
 add_executable(thormang3_action_editor
@@ -52,6 +71,7 @@ add_dependencies(thormang3_action_editor ${${PROJECT_NAME}_EXPORTED_TARGETS} ${c
 target_link_libraries(thormang3_action_editor
   ncurses
   ${catkin_LIBRARIES}
+  ${YAML_CPP_LIBRARIES}
 )
 
 ################################################################################
