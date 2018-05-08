@@ -13,7 +13,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   roslib
   std_msgs
-  cmake_modules
   dynamixel_sdk
   robotis_device
   robotis_math
@@ -25,7 +24,7 @@ find_package(catkin REQUIRED COMPONENTS
   thormang3_offset_tuner_msgs
 )
 
-find_package(Eigen REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${CATKIN_DEVEL_PREFIX}/lib/pkgconfig")
 find_package(PkgConfig)
